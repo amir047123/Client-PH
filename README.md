@@ -28,7 +28,7 @@ Check out the live demo [here](https://serverrecipesharing.niroghealthplus.com).
 1. Clone the repository:
    ```bash
    git clone https://github.com/amir047123/Recipe-Sharing-Client.git
-   cd Recipe-Sharing-Client
+- cd Recipe-Sharing-Client
 ## Install the dependencies
 - npm install
 
@@ -36,9 +36,9 @@ Check out the live demo [here](https://serverrecipesharing.niroghealthplus.com).
 - npm start
 
 ## Scripts
--npm start: Starts the development server.
--npm run build: Builds the app for production.
--npm test: Runs the test suite.
--npm run eject: Ejects the Create React App configuration (use with caution).
+- npm start: Starts the development server.
+- npm run build: Builds the app for production.
+- npm test: Runs the test suite.
+- npm run eject: Ejects the Create React App configuration (use with caution).
 
 
