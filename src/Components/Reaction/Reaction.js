@@ -7,6 +7,8 @@ import auth from "../../Firebase/Firebase";
 export default function Reaction({ recipeId }) {
   const [user] = useAuthState(auth);
 
+
+  // State variables to manage reaction counts, user's reaction status, and hovered reaction type
   const [counts, setCounts] = useState({
     thumbsUp: 0,
     heart: 0,
@@ -23,6 +25,8 @@ export default function Reaction({ recipeId }) {
   const [userReacted, setUserReacted] = useState(false);
   const [userReactionType, setUserReactionType] = useState(null);
 
+
+    // Effect to check if the user has reacted to the recipe upon component mount
   useEffect(() => {
     const fetchUserReaction = async () => {
       if (user) {
@@ -36,6 +40,9 @@ export default function Reaction({ recipeId }) {
     fetchUserReaction();
   }, [recipeId, user]);
 
+
+
+    // Effect to fetch reaction counts from the server upon component mount
   useEffect(() => {
     const fetchReactions = async () => {
       try {
@@ -64,6 +71,8 @@ export default function Reaction({ recipeId }) {
     fetchReactions();
   }, [recipeId]);
 
+
+    // Function to post user reaction to the server
   const postReaction = async (reactionType) => {
     if (!user) return;
 

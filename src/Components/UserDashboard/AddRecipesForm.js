@@ -6,6 +6,7 @@ import auth from "../../Firebase/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GetSingleUserHook from "../../Hooks/GetSingleUserHook";
 export default function AddRecipesForm() {
+    // State variables to manage form inputs and file upload
   const [title, setTitle] = useState("");
   const [recipeImage, setRecipeImage] = useState(null);
   const [youtubeVideo, setYoutubeVideo] = useState("");
@@ -16,6 +17,8 @@ export default function AddRecipesForm() {
   const [user] = useAuthState(auth);
   const singleUserData = GetSingleUserHook();
 
+
+    // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,9 +39,9 @@ export default function AddRecipesForm() {
         userName:user.displayName,
       };
 
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:5000/api/v1/recipes/addRecipes",
-        formData,{
+        formData, {
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           }
@@ -59,6 +62,8 @@ export default function AddRecipesForm() {
     }
   };
 
+
+    // Function to upload image to ImgBB
   const uploadImageToImgBB = async (imageFile) => {
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -95,6 +100,7 @@ export default function AddRecipesForm() {
               placeholder="Type your recipe title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </div>
           <div className="mb-4">
@@ -108,19 +114,21 @@ export default function AddRecipesForm() {
               className="mt-1 block w-full border p-3"
               onChange={(e) => setRecipeImage(e.target.files[0])}
               ref={inputFileRef}
+              required
             />
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
-              YouTube Video Link
+            Youtube Embed Video Link
             </label>
             <input
               type="text"
               name="youtubeVideo"
               className="mt-1 block w-full border p-3"
-              placeholder="YouTube video link"
+              placeholder="YouTube embed video link"
               value={youtubeVideo}
               onChange={(e) => setYoutubeVideo(e.target.value)}
+              required
             />
           </div>
           <div className="mb-4">
@@ -134,6 +142,7 @@ export default function AddRecipesForm() {
               placeholder="Type your country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
+              required
             />
           </div>
           <div className="mb-4">
@@ -145,6 +154,7 @@ export default function AddRecipesForm() {
               className="mt-1 block w-full border p-3"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              required
             >
               <option value="">Select a category</option>
               <option value="Rice Dishes">Rice Dishes</option>
@@ -166,6 +176,7 @@ export default function AddRecipesForm() {
             <JoditEditor
               value={recipeDetails}
               onChange={(newContent) => setRecipeDetails(newContent)}
+              required
             />
           </div>
           <button

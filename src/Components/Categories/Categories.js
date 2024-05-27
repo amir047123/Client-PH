@@ -1,20 +1,21 @@
-import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 
-// Assuming you have imported your category images correctly
 import CategoriesImage1 from "../../assets/Categories/Rice.png";
 import CategoriesImage2 from "../../assets/Categories/fish.png";
 import CategoriesImage3 from "../../assets/Categories/meat.png";
 import { Link } from "react-router-dom";
 
 export default function Categories() {
+    // State to store category data
   const [categoriesData, setCategoriesData] = useState({
     rice: [],
     fish: [],
     meat: [],
   });
 
+
+    // Fetching category data from the server
   useEffect(() => {
     fetch(
       "http://localhost:5000/api/v1/recipes/specific/?fieldName=category&fieldValue=Rice Dishes"

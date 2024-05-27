@@ -6,6 +6,8 @@ export default function SuccessStory() {
   const [userCount, setUserCount] = useState(0);
   const [recipeCount, setRecipeCount] = useState(0);
 
+
+    // Effect to fetch user count and recipe count when component mounts
   useEffect(() => {
     fetch("http://localhost:5000/api/v1/user/count")
       .then((response) => response.json())
@@ -51,7 +53,7 @@ export default function SuccessStory() {
 
                 <dd className="text-4xl font-extrabold text-primary md:text-5xl">
                   <CountUp end={userCount} duration={5}>
-                    {" "}
+                 
                   </CountUp>
                 </dd>
               </div>

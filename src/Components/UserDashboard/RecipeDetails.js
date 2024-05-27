@@ -10,6 +10,8 @@ const RecipeDetails = () => {
   const [relatedRecipes, setRelatedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+    // Fetches the recipe details and related recipes upon component mount
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -36,6 +38,7 @@ const RecipeDetails = () => {
     fetchRecipe();
   }, [id]);
 
+    // Renders the main recipe details and related recipes once data is fetched
   if (loading) {
     return <Loading />;
   }
@@ -45,7 +48,6 @@ const RecipeDetails = () => {
       <section>
         <div className="container mx-auto">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-8 lg:grid-cols-12">
-            {/* Recipe Details */}
             <div className="col-span-1 md:col-span-8 lg:col-span-7 bg-white  rounded-lg shadow-md">
               <div className="flex justify-start items-center gap-5 p-2">
                 <div className="flex justify-center items-center gap-2">
@@ -86,14 +88,12 @@ const RecipeDetails = () => {
               </div>
             </div>
 
-            {/* Related Recipes Section */}
             <div className="col-span-1 md:col-span-8 lg:col-span-5 border p-5 rounded-md bg-white">
               <div
                 className="relative"
                 style={{ width: "100%", height: "254px" }}
               >
                 {" "}
-                {/* Adjust height as needed */}
                 {recipe && (
                   <iframe
                     src={recipe.youtubeVideo}

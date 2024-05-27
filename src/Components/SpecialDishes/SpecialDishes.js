@@ -7,6 +7,8 @@ export default function SpecialDishes() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true); 
 
+
+    // Effect to fetch recipes from the server when the component mounts
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -24,6 +26,8 @@ export default function SpecialDishes() {
     fetchRecipes();
   }, []);
 
+
+    // Render a loading spinner while data is being fetched
   if (loading) {
     return <Loading />; 
   }

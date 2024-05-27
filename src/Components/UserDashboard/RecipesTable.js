@@ -10,6 +10,8 @@ export default function RecipesTable() {
   const [recipes, setRecipes] = useState([]);
   const [user] = useAuthState(auth);
 
+
+    // Fetches recipes belonging to the authenticated user
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -25,6 +27,8 @@ export default function RecipesTable() {
     fetchRecipes();
   }, [user]);
 
+
+    // Handles deletion of a recipe
   const handleDelete = async (_id) => {
     try {
       await axios.delete(

@@ -21,6 +21,10 @@ export default function RecipeCard({ recipe }) {
     }
   }, [user]);
 
+
+  
+  // Load user data
+
   const loadUserData = (email) => {
     fetch(`http://localhost:5000/api/v1/user/by-email?email=${email}`)
       .then((res) => res.json())
@@ -36,6 +40,9 @@ export default function RecipeCard({ recipe }) {
         toast("Error fetching user data");
       });
   };
+
+
+  // Update user's coin balance
 
   const updateUserCoins = (userId, newCoinAmount) => {
     fetch(`http://localhost:5000/api/v1/user/${userId}`, {
@@ -59,6 +66,9 @@ export default function RecipeCard({ recipe }) {
         toast("Error updating coin balance");
       });
   };
+
+
+  // Update creator's coin balance
 
   const updateCreatorCoins = (creatorId, creatorEmail) => {
     fetch(`http://localhost:5000/api/v1/user/by-email?email=${creatorEmail}`)
@@ -95,6 +105,9 @@ export default function RecipeCard({ recipe }) {
         toast("Error fetching creator's coin balance");
       });
   };
+
+
+  // Handle view recipe click event
 
   const handleViewRecipeClick = async (id, count, data) => {
     if (!user) {
@@ -168,7 +181,7 @@ export default function RecipeCard({ recipe }) {
             </h3>
           </header>
         </div>
-      
+
         <div className=" flex justify-between items-center p-4">
           <Reaction recipeId={recipe?._id}></Reaction>
 

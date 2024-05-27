@@ -4,13 +4,14 @@ import axios from "axios";
 import Loading from "../../Shared/Loading/Loading";
 
 export default function AllRecipes() {
+  // State variables
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  // Fetch recipes and categories from the server
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -19,6 +20,7 @@ export default function AllRecipes() {
         );
         const fetchedRecipes = response.data.data;
 
+        // Get unique categories
         const allCategories = fetchedRecipes
           .map((recipe) => recipe.category)
           .filter((category) => category);
@@ -37,26 +39,39 @@ export default function AllRecipes() {
     fetchRecipes();
   }, []);
 
+
+  // Handle category selection
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    setSearchResults([]); 
+    setSearchResults([]);
   };
 
+
+  // Handle search event
   const handleSearch = () => {
     const results = recipes.filter((recipe) => {
-      const titleMatch = recipe.title.toLowerCase().includes(searchQuery.toLowerCase());
-      const categoryMatch = recipe.category.toLowerCase().includes(searchQuery.toLowerCase());
-      const countryMatch = recipe.country.toLowerCase().includes(searchQuery.toLowerCase());
+      const titleMatch = recipe.title
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const categoryMatch = recipe.category
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const countryMatch = recipe.country
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
       return titleMatch || categoryMatch || countryMatch;
     });
     setSearchResults(results);
   };
-  
+
+    // Clear search
   const clearSearch = () => {
     setSearchQuery("");
     setSearchResults([]);
   };
 
+
+  // Count recipes in each category
   const categoryCounts = {};
   recipes.forEach((recipe) => {
     if (!categoryCounts[recipe.category]) {
@@ -66,8 +81,10 @@ export default function AllRecipes() {
     }
   });
 
+  
+  // Update recipe in parent component
+
   const updateRecipeInParentComponent = (updatedRecipe) => {
-    // Update the recipes state with the updated recipe
     const updatedRecipes = recipes.map((recipe) =>
       recipe._id === updatedRecipe._id ? updatedRecipe : recipe
     );
@@ -81,7 +98,6 @@ export default function AllRecipes() {
   return (
     <div className="container mx-auto py-10 px-4 lg:px-0">
       <h1 className="text-2xl font-bold">All Recipes</h1>
-      {/* Search input */}
       <div className="relative my-6">
         <input
           id="id-s03"
@@ -144,7 +160,9 @@ export default function AllRecipes() {
               <li
                 key={category}
                 className={`mb-2 border p-2 ring-primary  ring-1  ${
-                  selectedCategory === category ? "  bg-primary text-white " : ""
+                  selectedCategory === category
+                    ? "  bg-primary text-white "
+                    : ""
                 } cursor-pointer`}
                 onClick={() => handleCategoryClick(category)}
               >
@@ -163,11 +181,15 @@ export default function AllRecipes() {
               : recipes
                   .filter(
                     (recipe) =>
-                      !selectedCategory ||
-                      recipe.category === selectedCategory
+                      !selectedCategory || recipe.category === selectedCategory
                   )
                   .map((recipe, index) => (
-                    <RecipeCard key={index} recipe={recipe}   updateRecipeInParentComponent={updateRecipeInParentComponent}
+                    <RecipeCard
+                      key={index}
+                      recipe={recipe}
+                      updateRecipeInParentComponent={
+                        updateRecipeInParentComponent
+                      }
                     />
                   ))}
           </div>
