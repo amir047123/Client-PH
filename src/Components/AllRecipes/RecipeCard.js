@@ -26,7 +26,7 @@ export default function RecipeCard({ recipe }) {
   // Load user data
 
   const loadUserData = (email) => {
-    fetch(`http://localhost:5000/api/v1/user/by-email?email=${email}`)
+    fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/by-email?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
@@ -45,7 +45,7 @@ export default function RecipeCard({ recipe }) {
   // Update user's coin balance
 
   const updateUserCoins = (userId, newCoinAmount) => {
-    fetch(`http://localhost:5000/api/v1/user/${userId}`, {
+    fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/${userId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -71,14 +71,14 @@ export default function RecipeCard({ recipe }) {
   // Update creator's coin balance
 
   const updateCreatorCoins = (creatorId, creatorEmail) => {
-    fetch(`http://localhost:5000/api/v1/user/by-email?email=${creatorEmail}`)
+    fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/by-email?email=${creatorEmail}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
           const currentCoinBalance = data.data.coin;
           const newCoinBalance = currentCoinBalance + 1;
 
-          fetch(`http://localhost:5000/api/v1/user/${creatorId}`, {
+          fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/${creatorId}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export default function RecipeCard({ recipe }) {
 
     if (user.email === creatorEmail) {
       await UpdateHooks(
-        `http://localhost:5000/api/v1/recipes/updateRecipes/${id}`,
+        `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/updateRecipes/${id}`,
         { watchCount: count }
       );
       navigate(`/recipe-details/${recipe._id}`);
@@ -142,7 +142,7 @@ export default function RecipeCard({ recipe }) {
       const isPurchase = data?.purchase?.find((item) => item === user?.email);
       if (isPurchase) {
         await UpdateHooks(
-          `http://localhost:5000/api/v1/recipes/updateRecipes/${id}`,
+          `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/updateRecipes/${id}`,
           { watchCount: count }
         );
         navigate(`/recipe-details/${recipe._id}`);
@@ -151,7 +151,7 @@ export default function RecipeCard({ recipe }) {
         toast("You have successfully spent 10 coins to view this recipe.");
         await updateCreatorCoins(creatorId, creatorEmail);
         await UpdateHooks(
-          `http://localhost:5000/api/v1/recipes/updateRecipes/${id}`,
+          `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/updateRecipes/${id}`,
           { watchCount: count, purchase: [...data?.purchase, user?.email] }
         );
 

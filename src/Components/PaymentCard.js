@@ -10,7 +10,7 @@ const PaymentCard = ({ plan }) => {
   const [user] = useAuthState(auth);
 const [data,setData]=useState([]);
 useEffect(()=>{
-fetch(`http://localhost:5000/api/v1/user/by-email?email=${user?.email}`).then(res=>res.json()).then(data=>setData(data?.data))
+fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/by-email?email=${user?.email}`).then(res=>res.json()).then(data=>setData(data?.data))
 },[user])
 
   const tokenHandler = (token) => {
@@ -21,7 +21,7 @@ fetch(`http://localhost:5000/api/v1/user/by-email?email=${user?.email}`).then(re
       userName: user?.displayName,
     };
     pricingPaymentPostHook(
-      "http://localhost:5000/api/v1/payment/addPayment",
+      "https://serverrecipesharing.niroghealthplus.com/api/v1/payment/addPayment",
       pricingPaymentDetails,data?._id,{coin:data?.coin+plan?.coin}
     );
   };

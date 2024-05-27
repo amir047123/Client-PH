@@ -18,7 +18,7 @@ export default function Categories() {
     // Fetching category data from the server
   useEffect(() => {
     fetch(
-      "http://localhost:5000/api/v1/recipes/specific/?fieldName=category&fieldValue=Rice Dishes"
+      "https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/specific/?fieldName=category&fieldValue=Rice Dishes"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -32,7 +32,7 @@ export default function Categories() {
       });
 
     fetch(
-      "http://localhost:5000/api/v1/recipes/specific/?fieldName=category&fieldValue=Fish Dishes"
+      "https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/specific/?fieldName=category&fieldValue=Fish Dishes"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -46,7 +46,7 @@ export default function Categories() {
       });
 
     fetch(
-      "http://localhost:5000/api/v1/recipes/specific/?fieldName=category&fieldValue=Meat Dishes"
+      "https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/specific/?fieldName=category&fieldValue=Meat Dishes"
     )
       .then((response) => response.json())
       .then((data) => {

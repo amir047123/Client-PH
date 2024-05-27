@@ -8,7 +8,7 @@ export default function GetSingleUserHook() {
   const [singleUserData, setSingleUserData] = useState(null);
 
   const loadUserData = (email) => {
-    fetch(`http://localhost:5000/api/v1/user/by-email?email=${email}`)
+    fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/by-email?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {

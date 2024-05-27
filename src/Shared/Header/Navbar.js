@@ -25,7 +25,7 @@ export default function Navbar() {
       const email = data?.user?.email;
 
       const info = { email: email, img: img, name: name, coin: 50 };
-      fetch("http://localhost:5000/api/v1/user/addUser", {
+      fetch("https://serverrecipesharing.niroghealthplus.com/api/v1/user/addUser", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(info),
@@ -39,7 +39,7 @@ export default function Navbar() {
   };
 
   const loadUserData = (email) => {
-    fetch(`http://localhost:5000/api/v1/user/by-email?email=${email}`)
+    fetch(`https://serverrecipesharing.niroghealthplus.com/api/v1/user/by-email?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {

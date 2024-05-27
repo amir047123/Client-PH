@@ -16,7 +16,7 @@ export default function AllRecipes() {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/recipes/getRecipes"
+          "https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/getRecipes"
         );
         const fetchedRecipes = response.data.data;
 

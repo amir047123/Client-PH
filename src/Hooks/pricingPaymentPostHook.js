@@ -12,7 +12,7 @@ const pricingPaymentPostHook = async (url, data, id,upData) => {
   })
     .then((res) => res.json())
     .then(async (d) => {
-      const url = `http://localhost:5000/api/v1/user/${id}`;
+      const url = `https://serverrecipesharing.niroghealthplus.com/api/v1/user/${id}`;
       if (d.status === "success") {
         await UpdateHooks(url, upData);
     

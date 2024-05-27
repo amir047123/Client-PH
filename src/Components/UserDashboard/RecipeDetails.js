@@ -10,19 +10,18 @@ const RecipeDetails = () => {
   const [relatedRecipes, setRelatedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
-    // Fetches the recipe details and related recipes upon component mount
+  // Fetches the recipe details and related recipes upon component mount
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/recipes/getRecipesById/${id}`
+          `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/getRecipesById/${id}`
         );
         setRecipe(response.data.data);
 
         if (response.data.data) {
           const relatedResponse = await axios.get(
-            `http://localhost:5000/api/v1/recipes/specific/?fieldName=category&fieldValue=${encodeURIComponent(
+            `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/specific/?fieldName=category&fieldValue=${encodeURIComponent(
               response.data.data.category
             )}`
           );
@@ -38,7 +37,7 @@ const RecipeDetails = () => {
     fetchRecipe();
   }, [id]);
 
-    // Renders the main recipe details and related recipes once data is fetched
+  // Renders the main recipe details and related recipes once data is fetched
   if (loading) {
     return <Loading />;
   }
@@ -61,8 +60,7 @@ const RecipeDetails = () => {
                 </div>
                 ||
                 <p>{recipe?.userName} </p>
-                ||
-                <p>{recipe?.userName} </p>
+              
               </div>
               <div className="p-4 ">
                 {recipe && (

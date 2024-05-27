@@ -47,7 +47,7 @@ export default function Reaction({ recipeId }) {
     const fetchReactions = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/reactions/reactions/${recipeId}`
+          `https://serverrecipesharing.niroghealthplus.com/api/v1/reactions/reactions/${recipeId}`
         );
         if (response.data.reactions.length > 0) {
           const reactionData = response.data.reactions[0];
@@ -87,7 +87,7 @@ export default function Reaction({ recipeId }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/reactions/reactions",
+        "https://serverrecipesharing.niroghealthplus.com/api/v1/reactions/reactions",
         {
           recipeId,
           userId: user.uid,

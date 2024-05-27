@@ -16,7 +16,7 @@ export default function RecipesTable() {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/recipes/specific/?fieldName=user&fieldValue=${user.email}`
+          `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/specific/?fieldName=user&fieldValue=${user.email}`
         );
         setRecipes(response.data.data);
       } catch (error) {
@@ -32,7 +32,7 @@ export default function RecipesTable() {
   const handleDelete = async (_id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/v1/recipes/deleteRecipes/${_id}`
+        `https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/deleteRecipes/${_id}`
       );
 
       setRecipes(recipes.filter((recipe) => recipe._id !== _id));

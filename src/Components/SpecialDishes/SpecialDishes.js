@@ -13,7 +13,7 @@ export default function SpecialDishes() {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/recipes/getRecipes"
+          "https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/getRecipes"
         );
         setRecipes(response.data.data.slice(0, 8));
       } catch (error) {

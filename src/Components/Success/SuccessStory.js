@@ -9,7 +9,7 @@ export default function SuccessStory() {
 
     // Effect to fetch user count and recipe count when component mounts
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/user/count")
+    fetch("https://serverrecipesharing.niroghealthplus.com/api/v1/user/count")
       .then((response) => response.json())
       .then((data) => {
         setUserCount(data.total);
@@ -18,7 +18,7 @@ export default function SuccessStory() {
         console.error("Error fetching user count:", error);
       });
 
-    fetch("http://localhost:5000/api/v1/recipes/totalRecipes")
+    fetch("https://serverrecipesharing.niroghealthplus.com/api/v1/recipes/totalRecipes")
       .then((response) => response.json())
       .then((data) => {
         setRecipeCount(data.total);
