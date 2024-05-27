@@ -20,16 +20,21 @@ export default function Reaction({ recipeId }) {
   });
 
   const [hovered, setHovered] = useState(null);
-  const [userReacted, setUserReacted] = useState(false); 
-  const [userReactionType, setUserReactionType] = useState(null); 
+  const [userReacted, setUserReacted] = useState(false);
+  const [userReactionType, setUserReactionType] = useState(null);
 
   useEffect(() => {
-    const userReaction = localStorage.getItem(`reaction_${recipeId}`);
-    if (userReaction) {
-      setUserReacted(true);
-      setUserReactionType(userReaction);
-    }
-  }, [recipeId]);
+    const fetchUserReaction = async () => {
+      if (user) {
+        const userReaction = localStorage.getItem(`reaction_${recipeId}`);
+        if (userReaction) {
+          setUserReacted(true);
+          setUserReactionType(userReaction);
+        }
+      }
+    };
+    fetchUserReaction();
+  }, [recipeId, user]);
 
   useEffect(() => {
     const fetchReactions = async () => {
@@ -60,30 +65,55 @@ export default function Reaction({ recipeId }) {
   }, [recipeId]);
 
   const postReaction = async (reactionType) => {
-    if (!user || userReacted) return; 
+    if (!user) return;
+
+    const userReaction = localStorage.getItem(`reaction_${recipeId}`);
+    let action = "add";
+
+    if (userReacted && userReactionType === reactionType) {
+      action = "remove";
+    } else if (userReacted && userReactionType !== reactionType) {
+      action = "update";
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/reactions/reactions",
         {
           recipeId,
-          thumbsUp: reactionType === "thumbsUp" ? 1 : 0,
-          heart: reactionType === "heart" ? 1 : 0,
-          laugh: reactionType === "laugh" ? 1 : 0,
-          angry: reactionType === "angry" ? 1 : 0,
+          userId: user.uid,
+          reactionType,
+          action,
         }
       );
 
       if (response.status === 201 || response.status === 200) {
-        setCounts((prevCounts) => ({
-          ...prevCounts,
-          [reactionType]: prevCounts[reactionType] + 1,
-          [`${reactionType}Total`]: prevCounts[`${reactionType}Total`] + 1,
-          total: prevCounts.total + 1,
-        }));
-        setUserReacted(true); 
-        setUserReactionType(reactionType); 
+        const newCounts = { ...counts };
 
-        localStorage.setItem(`reaction_${recipeId}`, reactionType);
+        if (action === "add") {
+          newCounts[reactionType]++;
+          newCounts[`${reactionType}Total`]++;
+          newCounts.total++;
+          setUserReacted(true);
+          setUserReactionType(reactionType);
+          localStorage.setItem(`reaction_${recipeId}`, reactionType);
+        } else if (action === "remove") {
+          newCounts[reactionType]--;
+          newCounts[`${reactionType}Total`]--;
+          newCounts.total--;
+          setUserReacted(false);
+          setUserReactionType(null);
+          localStorage.removeItem(`reaction_${recipeId}`);
+        } else if (action === "update") {
+          newCounts[userReactionType]--;
+          newCounts[`${userReactionType}Total`]--;
+          newCounts[reactionType]++;
+          newCounts[`${reactionType}Total`]++;
+          setUserReactionType(reactionType);
+          localStorage.setItem(`reaction_${recipeId}`, reactionType);
+        }
+
+        setCounts(newCounts);
       }
     } catch (error) {
       console.error("Error posting reaction:", error);
@@ -98,16 +128,15 @@ export default function Reaction({ recipeId }) {
         }`}
         onClick={() => postReaction("thumbsUp")}
       >
-        <div className=" flex flex-col  justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
           <ThumbsUp
             onMouseEnter={() => setHovered("thumbsUp")}
             onMouseLeave={() => setHovered(null)}
           />
           <span>{counts.thumbsUpTotal}</span>
         </div>
-
         {hovered === "thumbsUp" && (
-          <span className="tooltip"> {counts.thumbsUpTotal}</span>
+          <span className="tooltip">{counts.thumbsUpTotal}</span>
         )}
       </div>
 
@@ -117,25 +146,25 @@ export default function Reaction({ recipeId }) {
         }`}
         onClick={() => postReaction("heart")}
       >
-        <div className=" flex flex-col  justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
           <Heart
             onMouseEnter={() => setHovered("heart")}
             onMouseLeave={() => setHovered(null)}
           />
           <span>{counts.heartTotal}</span>
         </div>
-
         {hovered === "heart" && (
-          <span className="tooltip"> {counts.heartTotal}</span>
+          <span className="tooltip">{counts.heartTotal}</span>
         )}
       </div>
+      
       <div
         className={`relative cursor-pointer ${
           userReacted && userReactionType === "laugh" ? "active" : ""
         }`}
         onClick={() => postReaction("laugh")}
       >
-        <div className=" flex flex-col  justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
           <Laugh
             onMouseEnter={() => setHovered("laugh")}
             onMouseLeave={() => setHovered(null)}
@@ -146,22 +175,22 @@ export default function Reaction({ recipeId }) {
           <span className="tooltip">{counts.laughTotal}</span>
         )}
       </div>
+      
       <div
         className={`relative cursor-pointer ${
           userReacted && userReactionType === "angry" ? "active" : ""
         }`}
         onClick={() => postReaction("angry")}
       >
-        <div className=" flex flex-col  justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
           <Angry
             onMouseEnter={() => setHovered("angry")}
             onMouseLeave={() => setHovered(null)}
           />
           <span>{counts.angryTotal}</span>
         </div>
-
         {hovered === "angry" && (
-          <span className="tooltip"> {counts.angryTotal}</span>
+          <span className="tooltip">{counts.angryTotal}</span>
         )}
       </div>
       <style jsx>{`
@@ -178,11 +207,11 @@ export default function Reaction({ recipeId }) {
           z-index: 10;
         }
         .active {
-          color: red; 
+          color: red;
         }
         .disabled {
-          opacity: 0.5; 
-          pointer-events: none; 
+          opacity: 0.5;
+          pointer-events: none;
         }
       `}</style>
     </div>

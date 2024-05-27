@@ -61,7 +61,6 @@ export default function RecipeCard({ recipe }) {
   };
 
   const updateCreatorCoins = (creatorId, creatorEmail) => {
-    // Fetch the current coin balance of the creator
     fetch(`http://localhost:5000/api/v1/user/by-email?email=${creatorEmail}`)
       .then((res) => res.json())
       .then((data) => {
@@ -69,7 +68,6 @@ export default function RecipeCard({ recipe }) {
           const currentCoinBalance = data.data.coin;
           const newCoinBalance = currentCoinBalance + 1;
 
-          // Update the creator's coin balance with the new value
           fetch(`http://localhost:5000/api/v1/user/${creatorId}`, {
             method: "PATCH",
             headers: {
@@ -170,16 +168,7 @@ export default function RecipeCard({ recipe }) {
             </h3>
           </header>
         </div>
-        {/* <div className=" p-4 pt-0">
-          <div className="flex  justify-end items-center   gap-5">
-            <button
-              className="inline-flex justify-center ease-in-out hover:scale-105 items-center h-10  max-w-sm px-6 text-sm font-medium tracking-wide text-white rounded bg-primary transition duration-300 hover:bg-black focus:bg-emerald-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
-             
-            >
-              <span>View Recipe!</span>
-            </button>
-          </div>
-        </div> */}
+      
         <div className=" flex justify-between items-center p-4">
           <Reaction recipeId={recipe?._id}></Reaction>
 

@@ -1,5 +1,4 @@
 import React from "react";
-import StripeCheckout from "react-stripe-checkout";
 import PaymentCard from "../Components/PaymentCard";
 
 export default function Coins() {

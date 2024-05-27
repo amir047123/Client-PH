@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
 import axios from "axios";
 import RecipeCard from "../AllRecipes/RecipeCard";
 import { Link } from "react-router-dom";
-
+import Loading from "../../Shared/Loading/Loading";
 export default function SpecialDishes() {
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -16,11 +16,17 @@ export default function SpecialDishes() {
         setRecipes(response.data.data.slice(0, 8));
       } catch (error) {
         console.error("Error fetching recipes:", error);
+      } finally {
+        setLoading(false); 
       }
     };
 
     fetchRecipes();
   }, []);
+
+  if (loading) {
+    return <Loading />; 
+  }
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 mx-auto mt-10 flex flex-col gap-8">

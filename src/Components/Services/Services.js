@@ -1,4 +1,4 @@
-import { ChefHat, Star } from "lucide-react";
+import {  Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Services() {

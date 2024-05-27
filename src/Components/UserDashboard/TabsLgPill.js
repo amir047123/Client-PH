@@ -59,7 +59,6 @@ export default function TabsLgPill() {
 
   return (
     <>
-      {/*<!-- Component: Pill lg sized tab --> */}
       <section className="max-w-full" aria-multiselectable="false">
         <ul className="flex items-center gap-2" role="tablist" ref={wrapperRef}>
           <li className="" role="presentation">
@@ -132,7 +131,6 @@ export default function TabsLgPill() {
           </div>
         </div>
       </section>
-      {/*<!-- End Pill lg sized tab --> */}
     </>
   );
 }
