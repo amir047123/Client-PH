@@ -17,11 +17,11 @@ Welcome to the Recipe Sharing application! This project allows users to share, b
 - **Stripe Integration**: Handle payments and subscriptions using Stripe.
 
 ## Client Side Demo
-Check out the live demo [here](https://recipesharing.niroghealthplus.com).
+- Check out the live demo [here](https://recipesharing.niroghealthplus.com).
 
 ## Server Side deo
 
-Check out the live demo [here](https://serverrecipesharing.niroghealthplus.com).
+- Check out the live demo [here](https://serverrecipesharing.niroghealthplus.com).
 
 ## Installation
 
